@@ -126,6 +126,7 @@ function loaded() {
 	wel.each(function(){
 		aList.push({
 			htOffset : $(this).offset(),
+			nHeight : $(this).height(),
 			wel : $(this)
 		});
 		
@@ -139,6 +140,22 @@ function loaded() {
 		for(var i = 0, aLen = aList.length; i < aLen; i++){
 			item = aList[i];
 			
+			var bAnimated = false;
+			
+			// 처음 로딩 or 아래방향으로 스크롤인 경우 
+			if(nPostScrollY == 0 || nPostScrollY >= myScroll.y ){
+				if(item.htOffset.top > -item.height && item.htOffset.top < nWinHeight){
+					item.wel.addClass('fadeInUp');
+					bAnimated = true;
+				}
+			}else{ // 윗 방향으로 스크롤인 경우 
+				if(item.htOffset.top > -myScroll.y - 250  && item.htOffset.top < nWinHeight + 50 - myScroll.y){
+					item.wel.addClass('fadeInUp');
+					bAnimated = true;
+				}				
+			}
+			
+			/*
 			if(item.htOffset.top > -myScroll.y - 250  && item.htOffset.top < nWinHeight + 50 - myScroll.y){
 				if(nPostScrollY == 0 || nPostScrollY >= myScroll.y ){
 					item.wel.addClass('fadeInUp');				
@@ -148,6 +165,7 @@ function loaded() {
 			} else {
 				item.wel.removeClass('fadeInUp fadeInDown').css('opacity', '0');
 			}
+			*/
 		}
 		nPostScrollY = myScroll.y;
 	
@@ -216,7 +234,7 @@ document.addEventListener('DOMContentLoaded', loaded, false);
 </head>
 <body>
 <div id="header"><a href="http://cubiq.org/iscroll">iScroll</a></div>
-<div style="position:absolute;top:0;left:0;font-size:10px;color:red;z-index:1000;background:white">Code 5</div>
+<div style="position:absolute;top:0;left:0;font-size:10px;color:red;z-index:1000;background:white">Code 6</div>
 <div id="wrapper">
 	<div id="scroller">
 		<ul id="thelist">
