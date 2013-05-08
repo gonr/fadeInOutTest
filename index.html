@@ -150,9 +150,12 @@ function loaded() {
 				}
 			}else{ // 윗 방향으로 스크롤인 경우 
 				if(item.htOffset.top > -myScroll.y - 250  && item.htOffset.top < nWinHeight + 50 - myScroll.y){
-					item.wel.addClass('fadeInUp');
+					item.wel.addClass('fadeInDown');
 					bAnimated = true;
 				}				
+			}
+			if(!bAnimated){
+				item.wel.removeClass('fadeInUp fadeInDown').css('opacity', '0');
 			}
 			
 			/*
@@ -234,7 +237,7 @@ document.addEventListener('DOMContentLoaded', loaded, false);
 </head>
 <body>
 <div id="header"><a href="http://cubiq.org/iscroll">iScroll</a></div>
-<div style="position:absolute;top:0;left:0;font-size:10px;color:red;z-index:1000;background:white">Code 7</div>
+<div style="position:absolute;top:0;left:0;font-size:10px;color:red;z-index:1000;background:white">Code 8</div>
 <div id="wrapper">
 	<div id="scroller">
 		<ul id="thelist">
