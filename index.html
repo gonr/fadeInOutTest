@@ -117,6 +117,7 @@ body {
 <script>
 	
 var myScroll;
+var nPostScrollY = 0;
 function loaded() {
 	var wel = $('#thelist').find('li');
 	
@@ -132,7 +133,6 @@ function loaded() {
 	});
 	
 	var _onScroll = function(e){
-		console.log("onScroll");
 		var item;
 		var nWinHeight = $(window).height();
 
@@ -140,9 +140,13 @@ function loaded() {
 			item = aList[i];
 			
 			if(item.htOffset.top > -myScroll.y - 250  && item.htOffset.top < nWinHeight + 50 - myScroll.y){
-				item.wel.addClass('fadeInUp');
+				if(nPostScrollY == 0 || nPostScrollY >= myScroll.y ){
+					item.wel.addClass('fadeInUp');				
+				}else{
+					item.wel.addClass('fadeInDown');
+				}
 			} else {
-				item.wel.removeClass('fadeInUp').css('opacity', '0');
+				item.wel.removeClass('fadeInUp fadeInDown').css('opacity', '0');
 			}
 		}
 	
