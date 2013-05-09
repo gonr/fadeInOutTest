@@ -68,21 +68,12 @@ body {
 }
 
 #wrapper {
-	position:absolute; z-index:1;
-	top:0; bottom:0; left:0;
 	width:100%;
 	background:#aaa;
 	overflow:auto;
 }
 
 #scroller {
-	position:relative;
-/*	-webkit-touch-callout:none;*/
-	-webkit-tap-highlight-color:rgba(0,0,0,0);
-
-	float:left;
-	width:100%;
-	padding:0;
 }
 
 #scroller ul {
@@ -95,6 +86,7 @@ body {
 }
 
 #scroller li {
+	overflow:hidden;
 	padding:0 10px;
 	margin:30px 30px 30px 30px;
 	height:200px;
@@ -135,47 +127,53 @@ function loaded() {
 	
 	var _onScroll = function(e){
 		var item;
+		var nWinScrollY = window.scrollY;
 		var nWinHeight = $(window).height();
+		var bAnimated = false;		
+		
+		var _animateFadeInUp = function(oItem){
+			if( (item.htOffset.top - nWinScrollY) > -item.nHeight && (item.htOffset.top - nWinScrollY) < nWinHeight){
+				if(!item.wel.hasClass("fadeInUp") && !item.wel.hasClass("fadeInDown")){
+					item.wel.addClass('fadeInUp');					
+				}
+				bAnimated = true;
+			}			
+		}
+
+		var _animateFadeInDown = function(oItem){
+			if( (item.htOffset.top - nWinScrollY) > -item.nHeight && (item.htOffset.top - nWinScrollY) < nWinHeight){
+				if(!item.wel.hasClass("fadeInUp") && !item.wel.hasClass("fadeInDown")){
+					item.wel.addClass('fadeInDown');					
+				}
+				bAnimated = true;
+			}			
+		}
 
 		for(var i = 0, aLen = aList.length; i < aLen; i++){
 			item = aList[i];
 			
-			var bAnimated = false;
-			
 			// 처음 로딩 or 아래방향으로 스크롤인 경우 
-			if(nPostScrollY == 0 || nPostScrollY >= myScroll.y ){
-				if(item.htOffset.top > -item.nHeight && item.htOffset.top < nWinHeight){
-					item.wel.addClass('fadeInUp');
-					bAnimated = true;
-				}
+			if(nPostScrollY == 0 || nPostScrollY <= nWinScrollY ){
+				_animateFadeInUp(item);
 			}else{ // 윗 방향으로 스크롤인 경우 
-				if(item.htOffset.top > -myScroll.y - 250  && item.htOffset.top < nWinHeight + 50 - myScroll.y){
-					item.wel.addClass('fadeInDown');
-					bAnimated = true;
-				}				
+				_animateFadeInDown(item);
 			}
+			
 			if(!bAnimated){
 				item.wel.removeClass('fadeInUp fadeInDown').css('opacity', '0');
 			}
 			
-			/*
-			if(item.htOffset.top > -myScroll.y - 250  && item.htOffset.top < nWinHeight + 50 - myScroll.y){
-				if(nPostScrollY == 0 || nPostScrollY >= myScroll.y ){
-					item.wel.addClass('fadeInUp');				
-				}else{
-					item.wel.addClass('fadeInDown');
-				}
-			} else {
-				item.wel.removeClass('fadeInUp fadeInDown').css('opacity', '0');
-			}
-			*/
+			bAnimated = false;
 		}
-		nPostScrollY = myScroll.y;
+		nPostScrollY = nWinScrollY;
 	
 	}
 
 	$('li').addClass('animated');
 	
+	$(window).scroll(_onScroll);
+	
+/*	
 	myScroll = new iScroll('wrapper', { scrollbarClass: 'myScrollbar',
 		bounce : false,
 		hScroll : false,
@@ -220,7 +218,7 @@ function loaded() {
 		lockDirection : true,
 		vScrollbar: true
 	});
-	
+*/	
 	$(document).ready(function(){
 		//_onScroll();
 		//$(document).on('touchcancel touchend', _onScroll);
