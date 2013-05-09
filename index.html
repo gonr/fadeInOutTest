@@ -173,60 +173,12 @@ function loaded() {
 	
 	$(window).scroll(_onScroll);
 	
-/*	
-	myScroll = new iScroll('wrapper', { scrollbarClass: 'myScrollbar',
-		bounce : false,
-		hScroll : false,
-		lockDirection : true,
-		onScrollStart: _onScroll,
-		onScrollMove: _onScroll,
-	
-		onMomentumStart :_onScroll,
-		onMomentumMove :_onScroll,
-		onMomentumEnd : _onScroll
-		
-	});
-	
-	
-	innerScroll = new iScroll('aaa', {
-		vScroll : false,
-		lockDirection : true,
-		vScrollbar: true
-	});
-	
-	innerScroll = new iScroll('bbb', {
-		vScroll : false,
-		lockDirection : true,
-		vScrollbar: true
-	});
-
-	
-	innerScroll = new iScroll('ccc', {
-		vScroll : false,
-		lockDirection : true,
-		vScrollbar: true
-	});
-	
-	innerScroll = new iScroll('ddd', {
-		vScroll : false,
-		lockDirection : true,
-		vScrollbar: true
-	});
-	
-	innerScroll = new iScroll('eee', {
-		vScroll : false,
-		lockDirection : true,
-		vScrollbar: true
-	});
-*/	
 	$(document).ready(function(){
 		//_onScroll();
 		//$(document).on('touchcancel touchend', _onScroll);
 	});
 	_onScroll();
 }
-
-document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 
 document.addEventListener('DOMContentLoaded', loaded, false);
 
